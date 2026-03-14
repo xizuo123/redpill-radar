@@ -49,8 +49,9 @@ class TwitterScraper:
             logger.info(f"Searching for keyword: '{keyword}'")
             try:
                 logger.info(f"Sending search request for '{keyword}'...")
-                # Get initial batch of tweets
-                tweets = await self.client.search_tweet(keyword, 'Latest')
+                # Get initial batch of tweets, filtering for English only
+                search_query = f"{keyword} lang:en"
+                tweets = await self.client.search_tweet(search_query, 'Latest')
                 logger.info(f"Successfully retrieved results for '{keyword}'")
                 
                 count = 0

@@ -1,3 +1,4 @@
+import os
 import asyncio
 import logging
 from dotenv import load_dotenv
@@ -17,12 +18,16 @@ load_dotenv()
 
 async def main():
     # Define target content keywords
-    search_keywords = [
-        "manosphere",
-        "incel",
-        "women hating", # Note: Twitter search natively handles phrases with spaces
-        "red pill"
-    ]
+    env_keywords = os.getenv('SCRAPER_KEYWORDS')
+    if env_keywords:
+        search_keywords = [k.strip() for k in env_keywords.split(',')]
+    else:
+        search_keywords = [
+            "manosphere",
+            "incel",
+            "women hating", # Note: Twitter search natively handles phrases with spaces
+            "red pill"
+        ]
     
     logger.info("Initializing TwitterScraper...")
     scraper = TwitterScraper()
@@ -32,8 +37,8 @@ async def main():
         await scraper.login()
         
         # Scrape content
-        # We limit to 5 per keyword for testing purposes
-        results = await scraper.search_content(search_keywords, max_tweets=5)
+        max_t = int(os.getenv('MAX_TWEETS', 5))
+        results = await scraper.search_content(search_keywords, max_tweets=max_t)
         
         if not results:
             logger.warning("No tweets found matching the criteria.")
