@@ -1,6 +1,7 @@
 import asyncio
 import os
 import logging
+from urllib.parse import quote
 from twikit import Client
 from typing import List, Dict
 
@@ -49,8 +50,9 @@ class TwitterScraper:
             logger.info(f"Searching for keyword: '{keyword}'")
             try:
                 logger.info(f"Sending search request for '{keyword}'...")
-                # Get initial batch of tweets, filtering for English only
+                # Get initial batch of tweets, filtering for English
                 search_query = f"{keyword} lang:en"
+                search_query = quote(search_query)
                 tweets = await self.client.search_tweet(search_query, 'Latest')
                 logger.info(f"Successfully retrieved results for '{keyword}'")
                 
