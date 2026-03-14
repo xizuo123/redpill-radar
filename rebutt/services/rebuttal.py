@@ -106,6 +106,7 @@ Rebuttal:"""
             
             rebuttal = response.choices[0].message.content.strip()
             logger.info(f"Generated rebuttal (length: {len(rebuttal)} chars)")
+            logger.debug(f"Rebuttal text: {rebuttal}")
             return rebuttal
             
         except Exception as e:
@@ -168,7 +169,8 @@ Rebuttal:"""
                 session.add(content)
                 await session.commit()
                 
-                logger.info(f"Updated content record {content_id} with rebuttal")
+                logger.info(f"✓ Updated content {content_id} (twitter_id: {twitter_id})")
+                logger.info(f"💬 Rebuttal: {rebuttal}")
                 return True
                 
         except Exception as e:
@@ -186,7 +188,11 @@ Rebuttal:"""
             bool: True if successful, False otherwise
         """
         try:
-            logger.info(f"Processing content {content_item.twitter_id}")
+            logger.info(f"\n{'='*80}")
+            logger.info(f"📌 Processing tweet {content_item.twitter_id}")
+            logger.info(f"{'='*80}")
+            logger.info(f"📝 Content: {content_item.content_text}")
+            logger.info(f"{'='*80}")
             
             # Generate rebuttal
             rebuttal = await self.generate_rebuttal(content_item.content_text)
@@ -202,7 +208,8 @@ Rebuttal:"""
             )
             
             if success:
-                logger.info(f"Successfully processed content {content_item.twitter_id}")
+                logger.info(f"✅ Successfully processed {content_item.twitter_id}")
+                logger.info(f"{'='*80}\n")
             
             return success
             
