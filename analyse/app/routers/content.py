@@ -39,6 +39,7 @@ async def ingest_content(
     record = Content(
         twitter_id=payload.twitter_id,
         content_text=payload.content_text,
+        author_username=payload.author_username,
         analysis_status="pending",
         is_processed=False,
         processing_history=[],

@@ -38,6 +38,7 @@ class DataProcessorAPI:
             body = {
                 "twitter_id": str(tweet["id"]),
                 "content_text": tweet["text"],
+                "author_username": tweet.get("username", "")
             }
             try:
                 response = requests.post(self.ingest_url, json=body, headers=headers)

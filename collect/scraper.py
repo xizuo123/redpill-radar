@@ -66,7 +66,8 @@ class TwitterScraper:
                         # twikit Tweet object has .id and .text
                         formatted_tweet = {
                             "id": str(tweet.id),
-                            "text": tweet.text
+                            "text": tweet.text,
+                            "username": getattr(tweet.user, 'screen_name', '')
                         }
                         
                         # Add to results if we haven't seen this ID yet to prevent duplicates across keyword searches

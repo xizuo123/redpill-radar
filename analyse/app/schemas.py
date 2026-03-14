@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 class ContentCreate(BaseModel):
     twitter_id: str = Field(..., min_length=1, description="Unique Twitter/X post ID")
     content_text: str = Field(..., min_length=1, description="Raw tweet text")
+    author_username: str | None = Field(None, description="Twitter/X username of the post author")
 
 
 class ContentStatusUpdate(BaseModel):
@@ -38,6 +39,7 @@ class ContentResponse(BaseModel):
     id: str
     twitter_id: str
     content_text: str
+    author_username: str | None = None
     age_category: str | None = None
     content_type: str | None = None
     harmful_subcategories: list[str] | None = None

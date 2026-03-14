@@ -20,6 +20,7 @@ class Content(Base):
     )
     twitter_id: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     content_text: Mapped[str] = mapped_column(Text)
+    author_username: Mapped[str | None] = mapped_column(String(255), nullable=True)
 
     age_category: Mapped[str | None] = mapped_column(String(50), nullable=True)
     content_type: Mapped[str | None] = mapped_column(String(50), nullable=True)
